@@ -1,0 +1,230 @@
+// Tree
+digraph {
+	1 [label=goal]
+	2 [label=mainClassDeclaration]
+		1 -> 2
+	3 [label=class]
+		2 -> 3
+	4 [label=Factorial]
+		2 -> 4
+	5 [label=mainClassBody]
+		2 -> 5
+	6 [label="{"]
+		5 -> 6
+	7 [label=mainMethod]
+		5 -> 7
+	8 [label=mainMethodDeclaration]
+		7 -> 8
+	9 [label=public]
+		8 -> 9
+	10 [label=static]
+		8 -> 10
+	11 [label=void]
+		8 -> 11
+	12 [label=main]
+		8 -> 12
+	13 [label="("]
+		8 -> 13
+	14 [label=String]
+		8 -> 14
+	15 [label="["]
+		8 -> 15
+	16 [label="]"]
+		8 -> 16
+	17 [label=a]
+		8 -> 17
+	18 [label=")"]
+		8 -> 18
+	19 [label="{"]
+		7 -> 19
+	20 [label=statement]
+		7 -> 20
+	21 [label="System.out.println"]
+		20 -> 21
+	22 [label="("]
+		20 -> 22
+	23 [label=expression]
+		20 -> 23
+	24 [label=expression]
+		23 -> 24
+	25 [label=new]
+		24 -> 25
+	26 [label=Fac]
+		24 -> 26
+	27 [label="("]
+		24 -> 27
+	28 [label=")"]
+		24 -> 28
+	29 [label="."]
+		23 -> 29
+	30 [label=ComputeFac]
+		23 -> 30
+	31 [label="("]
+		23 -> 31
+	32 [label=expression]
+		23 -> 32
+	33 [label=10]
+		32 -> 33
+	34 [label=")"]
+		23 -> 34
+	35 [label=")"]
+		20 -> 35
+	36 [label=";"]
+		20 -> 36
+	37 [label="}"]
+		7 -> 37
+	38 [label="}"]
+		5 -> 38
+	39 [label=classDeclaration]
+		1 -> 39
+	40 [label=class]
+		39 -> 40
+	41 [label=Fac]
+		39 -> 41
+	42 [label=classBody]
+		39 -> 42
+	43 [label="{"]
+		42 -> 43
+	44 [label=methodDeclaration]
+		42 -> 44
+	45 [label=public]
+		44 -> 45
+	46 [label=valueType]
+		44 -> 46
+	47 [label=intType]
+		46 -> 47
+	48 [label=int]
+		47 -> 48
+	49 [label=ComputeFac]
+		44 -> 49
+	50 [label=parameters]
+		44 -> 50
+	51 [label="("]
+		50 -> 51
+	52 [label=parameterList]
+		50 -> 52
+	53 [label=parameter]
+		52 -> 53
+	54 [label=valueType]
+		53 -> 54
+	55 [label=intType]
+		54 -> 55
+	56 [label=int]
+		55 -> 56
+	57 [label=num]
+		53 -> 57
+	58 [label=")"]
+		50 -> 58
+	59 [label=methodBody]
+		44 -> 59
+	60 [label="{"]
+		59 -> 60
+	61 [label=varDeclaration]
+		59 -> 61
+	62 [label=valueType]
+		61 -> 62
+	63 [label=intType]
+		62 -> 63
+	64 [label=int]
+		63 -> 64
+	65 [label=num_aux]
+		61 -> 65
+	66 [label=";"]
+		61 -> 66
+	67 [label=statement]
+		59 -> 67
+	68 [label=if]
+		67 -> 68
+	69 [label="("]
+		67 -> 69
+	70 [label=expression]
+		67 -> 70
+	71 [label=expression]
+		70 -> 71
+	72 [label=num]
+		71 -> 72
+	73 [label="<"]
+		70 -> 73
+	74 [label=expression]
+		70 -> 74
+	75 [label=1]
+		74 -> 75
+	76 [label=")"]
+		67 -> 76
+	77 [label=statement]
+		67 -> 77
+	78 [label=num_aux]
+		77 -> 78
+	79 [label="="]
+		77 -> 79
+	80 [label=expression]
+		77 -> 80
+	81 [label=1]
+		80 -> 81
+	82 [label=";"]
+		77 -> 82
+	83 [label=else]
+		67 -> 83
+	84 [label=statement]
+		67 -> 84
+	85 [label=num_aux]
+		84 -> 85
+	86 [label="="]
+		84 -> 86
+	87 [label=expression]
+		84 -> 87
+	88 [label=expression]
+		87 -> 88
+	89 [label=num]
+		88 -> 89
+	90 [label="*"]
+		87 -> 90
+	91 [label=expression]
+		87 -> 91
+	92 [label="("]
+		91 -> 92
+	93 [label=expression]
+		91 -> 93
+	94 [label=expression]
+		93 -> 94
+	95 [label=this]
+		94 -> 95
+	96 [label="."]
+		93 -> 96
+	97 [label=ComputeFac]
+		93 -> 97
+	98 [label="("]
+		93 -> 98
+	99 [label=expression]
+		93 -> 99
+	100 [label=expression]
+		99 -> 100
+	101 [label=num]
+		100 -> 101
+	102 [label="-"]
+		99 -> 102
+	103 [label=expression]
+		99 -> 103
+	104 [label=1]
+		103 -> 104
+	105 [label=")"]
+		93 -> 105
+	106 [label=")"]
+		91 -> 106
+	107 [label=";"]
+		84 -> 107
+	108 [label=return]
+		59 -> 108
+	109 [label=expression]
+		59 -> 109
+	110 [label=num_aux]
+		109 -> 110
+	111 [label=";"]
+		59 -> 111
+	112 [label="}"]
+		59 -> 112
+	113 [label="}"]
+		42 -> 113
+	114 [label=<EOF>]
+		1 -> 114
+}
