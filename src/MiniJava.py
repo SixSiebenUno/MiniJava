@@ -3,6 +3,7 @@ from MiniJavaLexer import MiniJavaLexer
 from MiniJavaParser import MiniJavaParser
 from MiniJavaVisitor import MiniJavaVisitor
 from MiniJavaErrorHandler import MiniJavaErrorListener
+from MiniJavaSemanticHandler import *
 from antlr4.tree.Trees import Trees
 from graphviz import Digraph
 import sys
@@ -41,13 +42,24 @@ def main():
     stream = CommonTokenStream(lexer)
     parser = MiniJavaParser(stream)
 
-    parser.removeErrorListeners()
-    parser.addErrorListener(MiniJavaErrorListener())
+    #parser.removeErrorListeners()
+    #parser.addErrorListener(MiniJavaErrorListener())
     tree = parser.goal()
-
+    print(tree.getText())
+    print(tree.getRuleIndex())
+    print(tree.getChildCount())
+    
     print ("------------------------")
     print ("Semantic Check...")
+    
+    visitor = MyVisitor()
+    visitor.visit(tree)
 
+    '''
+    print ("Unknown Identifer: 11:9 a")
+    print ("	a = 1;")
+    print ("	^")
+    '''
     print ("------------------------")
     print(Trees.toStringTree(tree, None, parser))
 
