@@ -45,9 +45,6 @@ def main():
     #parser.removeErrorListeners()
     #parser.addErrorListener(MiniJavaErrorListener())
     tree = parser.goal()
-    print(tree.getText())
-    print(tree.getRuleIndex())
-    print(tree.getChildCount())
     
     print ("------------------------")
     print ("Semantic Check...")
@@ -55,11 +52,6 @@ def main():
     visitor = MyVisitor()
     visitor.visit(tree)
 
-    '''
-    print ("Unknown Identifer: 11:9 a")
-    print ("	a = 1;")
-    print ("	^")
-    '''
     print ("------------------------")
     print(Trees.toStringTree(tree, None, parser))
 
