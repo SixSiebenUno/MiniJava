@@ -3,6 +3,28 @@ from MiniJavaVisitor import *
 from MiniJavaListener import *
 
 
+def PrintDetail(token, line, column):
+    input = token.getInputStream()
+    string = str(input).split("\n")[line - 1]
+    print(string)
+
+    underline = ""
+    idx = 0
+    for char in string:
+        if char == '\t':
+            underline += '\t'
+            idx += 1
+        else:
+            break
+    for i in range(column):
+        if string[i + idx] == '\t':
+            underline += '\t'
+        else:
+            underline += ' '
+    underline += '^'
+    print(underline)
+
+
 class MyVisitor(MiniJavaVisitor):
     def __init__(self,*args,**kargs):
         self.symbols = SymbolStack()
@@ -12,6 +34,7 @@ class MyVisitor(MiniJavaVisitor):
         column = token.column
         msg = s
         print ("line " + str(line) + ":"+str(column)+"\t"+"SemanticFault "+ msg)
+        PrintDetail(token, line, column)
 
     def errorIdUnDec(self,s,ctx):
         self.printerror(s,ctx)
@@ -21,18 +44,16 @@ class MyVisitor(MiniJavaVisitor):
 
     def check(self,key):
         return self.symbols.check(key)
-
-    def visitStatparent(self, ctx):
-
-        symbol = self.symbols.addNew()
-        statname = ctx.Identifier().getText()
-        ret = self.visitChildren(ctx)
-        self.symbols.delLast()
-        return ret 
     
-    def visitStatdef(self, ctx):
+    def visitStatement(self, ctx):
+        # print("state def")
         symbol = self.symbols.getTop()
+        # print(ctx.Identifier())
+        # print(symbol)
+        if ctx.Identifier() == None:
+            return
         idname = ctx.Identifier().getText()
+        # print ("visitStatdef: ", symbol, idname)
         if not self.check(idname):
             self.errorMultipleDec("Unknown Identifer: " + idname , ctx.Identifier().getSymbol())
         ret = self.visitChildren(ctx)
@@ -63,7 +84,7 @@ class MyVisitor(MiniJavaVisitor):
         if not self.check(classname):
             prevsymbol.push(classname,"class")
         else:
-            self.errorMultipleDec("Multiple Class Dec: " + classname,ctx.Identifier(0).getSymbol())
+            self.errorMultipleDec("Multiple Class Dec: " + classname,ctx.Identifier().getSymbol())
         symbol = self.symbols.addNew()
         ret = self.visitChildren(ctx)
         self.symbols.delLast()
@@ -77,7 +98,7 @@ class MyVisitor(MiniJavaVisitor):
         if self.check(varname) == False:
             prevsymbol.push(varname,vartype)
         else:
-            self.errorMultipleDec("Multiple Vars Dec: " + varname,ctx.Identifier().getSymbol())
+            self.errorMultipleDec("Multiple Varations Dec: " + varname,ctx.Identifier().getSymbol())
         return self.visitChildren(ctx)
 
 
@@ -85,32 +106,35 @@ class MyVisitor(MiniJavaVisitor):
         prevsymbol = self.symbols.getTop()
         methodname = ctx.Identifier().getText()
         methodtype = ctx.valueType().getText()
+        # print("*** method" , methodname, methodtype)
         if self.check(methodname) == False:
-            prevsymbol.push(methodname,methodtype)
+            prevsymbol.push(methodname, methodtype)
         symbol = self.symbols.addNew()
         try:
+            # print(ctx.valueType(), ctx.Identifier())
             for i in range(1,10):
                 vartype = ctx.valueType(i).getText()
                 varname = ctx.Identifier(i).getText()
                 var = ctx.Identifier(i)
+                # print("add var ", vartype, varname)
                 if symbol.check(varname) == False:
                     symbol.push(varname,vartype)
                 else:
-                    self.errorMultipleDec("Multiple Vars Dec: " + varname,var.getSymbol())
+                    self.errorMultipleDec("Multiple Varations Dec: " + varname,var.getSymbol())
         except:
               pass
 
         ret = self.visitChildren(ctx)
         self.symbols.delLast()
         return ret 
-    
 
-    def visitId(self,ctx):
+    def visitParameter(self,ctx):
         Id = ctx.Identifier().getText()
-        print ("visit id " , id)
+        # print ("visit id " , Id, self.check(Id))
         a = self.check(Id)
         if  a == False:
-            self.errorIdUnDec("Unknown Identifer: "+ Id,ctx.Identifier().getSymbol())
+            pass
+            # self.errorIdUnDec("Unknown Identifer: "+ Id,ctx.Identifier().getSymbol())
         return a
 
 
