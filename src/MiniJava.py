@@ -6,6 +6,7 @@ from MiniJavaErrorHandler import MiniJavaErrorListener
 from MiniJavaSemanticHandler import *
 from antlr4.tree.Trees import Trees
 from graphviz import Digraph
+import argparse
 import sys
 
 cnt = 0
@@ -29,39 +30,53 @@ def DFS(node, fa, prefix_str):
 
 
 def main():
-    if len(sys.argv) != 2:
-        print ("Instruction Error!")
-        print ("Usage : python MiniJava.py demo.java")
-    
-    input = FileStream(sys.argv[1])
 
-    print ("------------------------")
-    print ("Lexical and Syntax Check...")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('input', help='input_file')
+    parser.add_argument('-AST', '--ast_flag',
+                        action='store_true', default=False, help="ast_flag")
+    parser.add_argument('-treegraph', '--tree_flag',
+                        action='store_true', default=False, help="tree_flag")
+    args = parser.parse_args()
+
+    if args.input is None:
+        print("Instruction Error!")
+        print("Usage : python MiniJava.py demo.java [-AST -treegraph]")
+    
+    input = FileStream(args.input)
+
+    print("------------------------")
+    print("Lexical and Syntax Check...")
 
     lexer = MiniJavaLexer(input)
     stream = CommonTokenStream(lexer)
     parser = MiniJavaParser(stream)
 
+    print("Lexical and Syntax Check Done.")
+
     #parser.removeErrorListeners()
     #parser.addErrorListener(MiniJavaErrorListener())
     tree = parser.goal()
-    
-    print ("------------------------")
-    print ("Semantic Check...")
+
+    print("------------------------")
+    print("Semantic Check...")
     
     visitor = MyVisitor()
     visitor.visit(tree)
 
-    print ("------------------------")
-    print(Trees.toStringTree(tree, None, parser))
+    print("Semantic Check Done.")
+    print("------------------------")
+    if args.ast_flag:
+        print("AST string:")
+        print(Trees.toStringTree(tree, None, parser))
+        print("------------------------")
 
-    print ("------------------------")
-    
-    print ("Generate Parse Tree...")
-    DFS(tree, 0, "")
-
-    #dot.format = 'png'
-    #dot.render('tree.gv', view=True)
+    if args.tree_flag:
+        print("Generate Parse Tree...")
+        DFS(tree, 0, "")
+        dot.format = 'png'
+        dot.render('tree.gv', view=True)
+        print("Generate Parse Tree Finished.")
 
 
 if __name__ == "__main__":
