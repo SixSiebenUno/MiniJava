@@ -5,10 +5,10 @@ from MiniJavaListener import *
 
 def PrintDetail(token, line, column):
     input = token.getInputStream()
-    string = str(input).split("\n")[line - 1]
+    string = str(input).split('\n')[line - 1]
     print(string)
 
-    underline = ""
+    underline = ''
     idx = 0
     for char in string:
         if char == '\t':
@@ -16,8 +16,8 @@ def PrintDetail(token, line, column):
             idx += 1
         else:
             break
-    for i in range(column):
-        if string[i + idx] == '\t':
+    for i in range(idx, column):
+        if string[i] == '\t':
             underline += '\t'
         else:
             underline += ' '
@@ -90,7 +90,6 @@ class MyVisitor(MiniJavaVisitor):
         self.symbols.delLast()
         return ret 
 
-
     def visitVarDeclaration(self, ctx):
         prevsymbol = self.symbols.getTop()
         varname = ctx.Identifier().getText()
@@ -100,7 +99,6 @@ class MyVisitor(MiniJavaVisitor):
         else:
             self.errorMultipleDec("Multiple Varations Dec: " + varname,ctx.Identifier().getSymbol())
         return self.visitChildren(ctx)
-
 
     def visitMethodDeclaration(self, ctx):
         prevsymbol = self.symbols.getTop()
@@ -143,6 +141,7 @@ class SymbolStack(object):
         self.symbols = {}
         self.stack = []
         self.history = []
+
     def printStack(self):
         for i in self.stack:
             print (i.symbols)
@@ -157,25 +156,32 @@ class SymbolStack(object):
             return False
         else:
             return res
+
     def addNew(self):
         a = SymbolList()
         self.stack.append(a)
         self.history.append(a)
         return a
+
     def getTop(self):
         return self.stack[-1]
+
     def delLast(self):
         last = self.stack.pop()
         self.history.append("POP")
         return last
 
+
 class SymbolList(object):
     def __init__(self,*args,**kargs):
         self.symbols = {}
+
     def push(self,key,value):
         self.symbols[key] = value
+
     def pop(self,key):
         self.symbols.pop(key)
+
     def check(self,key):
         try:
             ret = self.symbols[key]

@@ -8,10 +8,10 @@ class MiniJavaErrorListener(ErrorListener):
     def MyPrintDetail(self, recognizer, offendingSymbol, line, column, msg, e):
         token = recognizer.getCurrentToken()
         input = token.getInputStream()
-        string = str(input).split("\n")[line - 1]
+        string = str(input).split('\n')[line - 1]
         print(string)
 
-        underline = ""
+        underline = ''
         idx = 0
         for char in string:
             if char == '\t':
@@ -23,7 +23,7 @@ class MiniJavaErrorListener(ErrorListener):
             if string[i + idx] == '\t':
                 underline += '\t'
             else:
-                underline += ' '
+                underline += ''
         underline += '^'
         print(underline)
 

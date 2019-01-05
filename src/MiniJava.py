@@ -52,12 +52,12 @@ def main():
     stream = CommonTokenStream(lexer)
     parser = MiniJavaParser(stream)
 
-    print("Lexical and Syntax Check Done.")
 
     #parser.removeErrorListeners()
     #parser.addErrorListener(MiniJavaErrorListener())
     tree = parser.goal()
 
+    print("Lexical and Syntax Check Done.")
     print("------------------------")
     print("Semantic Check...")
     
